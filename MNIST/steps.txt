@@ -1,0 +1,7 @@
+1. gunzip -k <file.gz>
+2. python extractData.py
+3. import mnist_loader
+4. training_data, test_data =  mnist_loader.load_data_wrapper()
+5. import mnistNN
+6. net = mnistNN.NeuralNet([784,30,10])
+7. net.stocGradDesc(training_data, 30, 10, 3.0, testing_data=test_data)

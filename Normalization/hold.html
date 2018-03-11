@@ -1,0 +1,222 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>hold</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-08-15"><meta name="DC.source" content="hold.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> hold(varargin)
+<span class="comment">%HOLD   Hold current graph</span>
+<span class="comment">%   HOLD ON holds the current plot and all axis properties, including</span>
+<span class="comment">%   the current color and linestyle, so that subsequent graphing commands</span>
+<span class="comment">%   add to the existing graph without resetting the color and linestyle.</span>
+<span class="comment">%   HOLD OFF returns to the default mode whereby PLOT commands erase</span>
+<span class="comment">%   the previous plots and reset all axis properties before drawing</span>
+<span class="comment">%   new plots.</span>
+<span class="comment">%   HOLD, by itself, toggles the hold state.</span>
+<span class="comment">%   HOLD does not affect axis autoranging properties.</span>
+<span class="comment">%</span>
+<span class="comment">%   HOLD ALL is the same as HOLD ON. This syntax will be removed in</span>
+<span class="comment">%   a future release. Use HOLD ON instead.</span>
+<span class="comment">%</span>
+<span class="comment">%   HOLD(AX,...) applies the command to the Axes object AX.</span>
+<span class="comment">%</span>
+<span class="comment">%   Algorithm note:</span>
+<span class="comment">%   HOLD ON sets the NextPlot property of the current figure and</span>
+<span class="comment">%   axes to "add".</span>
+<span class="comment">%   HOLD OFF sets the NextPlot property of the current axes to</span>
+<span class="comment">%   "replace".</span>
+<span class="comment">%</span>
+<span class="comment">%   See also ISHOLD, NEWPLOT, FIGURE, AXES.</span>
+
+
+
+<span class="comment">% Parse possible Axes input</span>
+narginchk(0,2);
+
+<span class="comment">% look for leading axes (must not be a vector of handles)</span>
+[ax,args,nargs] = axescheck(varargin{:});
+
+<span class="keyword">if</span> isempty(ax)
+    ax = gca;
+<span class="keyword">end</span>
+matlab.graphics.internal.markFigure(ax);
+fig = get(ax,<span class="string">'Parent'</span>);
+<span class="keyword">if</span> ~strcmp(get(fig,<span class="string">'Type'</span>),<span class="string">'figure'</span>)
+  fig = ancestor(fig,<span class="string">'figure'</span>);
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> ~isempty(args)
+    opt_hold_state = args{1};
+<span class="keyword">end</span>
+
+nexta = get(ax,<span class="string">'NextPlot'</span>);
+nextf = get(fig,<span class="string">'NextPlot'</span>);
+hold_state = strcmp(nexta,<span class="string">'add'</span>) &amp;&amp; strcmp(nextf,<span class="string">'add'</span>);
+
+replace_state = <span class="string">'replace'</span>;
+<span class="keyword">if</span> isa(ax,<span class="string">'matlab.ui.control.UIAxes'</span>)
+    replace_state = <span class="string">'replacechildren'</span>;
+<span class="keyword">end</span>
+
+<span class="keyword">if</span>(nargs == 0)
+    <span class="keyword">if</span>(hold_state)
+        set(ax,<span class="string">'NextPlot'</span>,replace_state);
+        disp(getString(message(<span class="string">'MATLAB:hold:CurrentPlotReleased'</span>)));
+    <span class="keyword">else</span>
+        set(fig,<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+        set(ax,<span class="string">'NextPlot'</span>, <span class="string">'add'</span>);
+        disp(getString(message(<span class="string">'MATLAB:hold:CurrentPlotHeld'</span>)));
+    <span class="keyword">end</span>
+<span class="keyword">elseif</span>(strcmp(opt_hold_state, <span class="string">'on'</span>))
+    set(fig,<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+    set(ax,<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+<span class="keyword">elseif</span>(strcmp(opt_hold_state, <span class="string">'off'</span>))
+    set(ax,<span class="string">'NextPlot'</span>, replace_state);
+<span class="keyword">elseif</span>(strcmp(opt_hold_state, <span class="string">'all'</span>))
+    set(fig,<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+    set(ax,<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+<span class="keyword">else</span>
+    error(message(<span class="string">'MATLAB:hold:UnknownOption'</span>));
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">Current plot held
+</pre><img vspace="5" hspace="5" src="hold_01.png" alt=""> <p class="footer">Copyright 1984-2015 The MathWorks, Inc.<br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function hold(varargin)
+%HOLD   Hold current graph
+%   HOLD ON holds the current plot and all axis properties, including 
+%   the current color and linestyle, so that subsequent graphing commands
+%   add to the existing graph without resetting the color and linestyle.
+%   HOLD OFF returns to the default mode whereby PLOT commands erase 
+%   the previous plots and reset all axis properties before drawing 
+%   new plots.
+%   HOLD, by itself, toggles the hold state.
+%   HOLD does not affect axis autoranging properties.
+%
+%   HOLD ALL is the same as HOLD ON. This syntax will be removed in 
+%   a future release. Use HOLD ON instead.
+%
+%   HOLD(AX,...) applies the command to the Axes object AX.
+%
+%   Algorithm note:
+%   HOLD ON sets the NextPlot property of the current figure and
+%   axes to "add".
+%   HOLD OFF sets the NextPlot property of the current axes to
+%   "replace".
+%
+%   See also ISHOLD, NEWPLOT, FIGURE, AXES.
+
+%   Copyright 1984-2015 The MathWorks, Inc.
+
+% Parse possible Axes input
+narginchk(0,2);
+
+% look for leading axes (must not be a vector of handles)
+[ax,args,nargs] = axescheck(varargin{:});
+
+if isempty(ax)
+    ax = gca;
+end
+matlab.graphics.internal.markFigure(ax);
+fig = get(ax,'Parent');
+if ~strcmp(get(fig,'Type'),'figure')
+  fig = ancestor(fig,'figure');
+end
+
+if ~isempty(args)
+    opt_hold_state = args{1};
+end
+
+nexta = get(ax,'NextPlot');
+nextf = get(fig,'NextPlot');
+hold_state = strcmp(nexta,'add') && strcmp(nextf,'add');
+
+replace_state = 'replace';
+if isa(ax,'matlab.ui.control.UIAxes')
+    replace_state = 'replacechildren';
+end
+
+if(nargs == 0)
+    if(hold_state)
+        set(ax,'NextPlot',replace_state);
+        disp(getString(message('MATLAB:hold:CurrentPlotReleased')));
+    else
+        set(fig,'NextPlot','add');
+        set(ax,'NextPlot', 'add');
+        disp(getString(message('MATLAB:hold:CurrentPlotHeld')));
+    end
+elseif(strcmp(opt_hold_state, 'on'))
+    set(fig,'NextPlot','add');
+    set(ax,'NextPlot','add');
+elseif(strcmp(opt_hold_state, 'off'))
+    set(ax,'NextPlot', replace_state);
+elseif(strcmp(opt_hold_state, 'all'))
+    set(fig,'NextPlot','add');
+    set(ax,'NextPlot','add');
+else
+    error(message('MATLAB:hold:UnknownOption'));
+end
+
+##### SOURCE END #####
+--></body></html>

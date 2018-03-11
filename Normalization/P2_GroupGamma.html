@@ -1,0 +1,397 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>P2_GroupGamma</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-08-15"><meta name="DC.source" content="P2_GroupGamma.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">CS4821 Project2 GroupGamma</a></li><li><a href="#3">Question 1: minmaxnorm and zscorenorm</a></li><li><a href="#8">Question 2 : Normalize Data</a></li><li><a href="#12">Question 3 : Iris Data</a></li><li><a href="#17">Question 4 : Distance Data</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> P2_GroupGamma
+</pre><h2 id="2">CS4821 Project2 GroupGamma</h2><p><b>Prithvi Kambhampati</b></p><p><b>Sree Ram Akula</b></p><h2 id="3">Question 1: minmaxnorm and zscorenorm</h2><pre class="codeinput"><span class="keyword">function</span> [trData_minmaxnorm, teData_minmaxnorm] = minmaxNorm(trData,teData,minV,maxV)
+</pre><pre class="codeinput"><span class="keyword">if</span> ((nargin==1) &amp; (nargout==1))
+    <span class="keyword">for</span> i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = (trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i)));
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">if</span> ((nargin==2) &amp; (nargout==2))
+    <span class="keyword">for</span> i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = (trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i)));
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i = 1:size(teData,2)
+        teData_minmaxnorm(:,i) = (teData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i)));
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">if</span> ((nargin==3) &amp; (nargout==1))
+    <span class="keyword">for</span> i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = ((trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i))))*(minV-teData)+teData;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">if</span> ((nargin==4) &amp; (nargout==2))
+    <span class="keyword">for</span> i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = ((trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i))))*(maxV-minV)+minV;
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> i = i:size(teData,2)
+        teData_minmaxnorm(:,i) = ((teData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i))))*(maxV-minV)+minV;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeinput"><span class="keyword">end</span>
+
+<span class="keyword">function</span> [trData_zscorenorm,teData_zscorenorm] = zscoreNorm(trData,teData,madFlag)
+</pre><pre class="codeinput"><span class="keyword">if</span> ((nargin==2) &amp; (nargout==1))
+    <span class="keyword">if</span> teData&gt;0
+        <span class="keyword">for</span> i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/mad(trData(:,i));
+        <span class="keyword">end</span>
+    <span class="keyword">else</span>
+        <span class="keyword">for</span> i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/std(trData(:,i));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="keyword">if</span> ((nargin==3) &amp; (nargout==2))
+    <span class="keyword">if</span> madFlag&gt;0
+        <span class="keyword">for</span> i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/mad(trData(:,i));
+        <span class="keyword">end</span>
+        <span class="keyword">for</span> i = 1:size(teData,2)
+            teData_zscorenorm(:,i) = (teData(:,i)-mean(trData(:,i)))/mad(trData(:,i));
+        <span class="keyword">end</span>
+    <span class="keyword">else</span>
+        <span class="keyword">for</span> i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/std(trData(:,i));
+        <span class="keyword">end</span>
+        <span class="keyword">for</span> i = 1:size(teData,2)
+            teData_zscorenorm(:,i) = (teData(:,i)-mean(trData(:,i)))/std(trData(:,i));
+        <span class="keyword">end</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><h2 id="8">Question 2 : Normalize Data</h2><p><b>a. min-max Normalization in range 0-1</b></p><pre class="codeinput">clear;
+Data_Q2 = [200;300;400;600;1000];
+MinMax_Norm_Data_Q2 = minmaxNorm(Data_Q2);
+</pre><p><b>b. z-score Normalization</b></p><pre class="codeinput">Zscore_Norm_Data_Q2 = zscoreNorm(Data_Q2,0);
+</pre><p><b>c. z-score Normalization using mean absolute deviation</b></p><pre class="codeinput">Mad_Zscore_Norm_Data_Q2 = zscoreNorm(Data_Q2,1);
+Sno={<span class="string">'1'</span>,<span class="string">'2'</span>,<span class="string">'3'</span>,<span class="string">'4'</span>,<span class="string">'5'</span>};
+Table=table(Data_Q2,MinMax_Norm_Data_Q2,Zscore_Norm_Data_Q2,Mad_Zscore_Norm_Data_Q2,<span class="keyword">...</span>
+   <span class="string">'RowNames'</span>,Sno)
+</pre><pre class="codeoutput">
+Table = 
+
+         Data_Q2    MinMax_Norm_Data_Q2    Zscore_Norm_Data_Q2    Mad_Zscore_Norm_Data_Q2
+         _______    ___________________    ___________________    _______________________
+
+    1     200           0                  -0.94868                  -1.25               
+    2     300       0.125                  -0.63246               -0.83333               
+    3     400        0.25                  -0.31623               -0.41667               
+    4     600         0.5                   0.31623                0.41667               
+    5    1000           1                    1.5811                 2.0833               
+
+</pre><h2 id="12">Question 3 : Iris Data</h2><pre class="codeinput">iris_data = fileread(<span class="string">'iris.data'</span>);
+iris_data = textscan(iris_data,<span class="string">'%f%f%f%f%s'</span>,<span class="string">'delimiter'</span>,<span class="string">','</span>);
+petal_length = cell2mat(iris_data(1,3));
+</pre><p><b>a. min-max Normalization in range -1 - 1</b></p><pre class="codeinput">Data_Q3 = [1.95;3.1;5.68;6.2];
+disp(Data_Q3)
+[MinMax_Norm_petal_length,MinMax_Norm_Data_Q3] = minmaxNorm(petal_length,Data_Q3,-1,1);
+fprintf(<span class="string">'mix max normaliaztion of 1.95, 3.1, 5.68, 6.2 is:\n'</span>)
+disp(MinMax_Norm_Data_Q3)
+</pre><pre class="codeoutput">    1.9500
+    3.1000
+    5.6800
+    6.2000
+
+mix max normaliaztion of 1.95, 3.1, 5.68, 6.2 is:
+   -0.6780
+   -0.2881
+    0.5864
+    0.7627
+
+</pre><p><b>b. z-score Normalization</b></p><pre class="codeinput">[Zscore_Norm_petal_length,Zscore_Norm_Data_Q3] = zscoreNorm(petal_length,Data_Q3,0);
+fprintf(<span class="string">'Z-score Normaliaztion of 1.95, 3.1, 5.68, 6.2 is:\n'</span>)
+disp(Zscore_Norm_Data_Q3)
+</pre><pre class="codeoutput">Z-score Normaliaztion of 1.95, 3.1, 5.68, 6.2 is:
+   -1.0251
+   -0.3733
+    1.0889
+    1.3836
+
+</pre><p><b>c. Comment on which method is preferred for this data, and why?</b></p><pre class="codeinput">figure
+hold <span class="string">on</span>
+plot(MinMax_Norm_Data_Q3)
+plot(Zscore_Norm_Data_Q3)
+legend(<span class="string">'minmax'</span>,<span class="string">'Z score'</span>,<span class="string">'location'</span>,<span class="string">'northwest'</span>)
+hold <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="P2_GroupGamma_01.png" alt=""> <p>We think that Z-score normalization is better in this case as the data does not have a huge range to normalize it between a particular range. Z-score preserves the range and introduces the dispersion of the series (standard deviation and mean).</p><h2 id="17">Question 4 : Distance Data</h2><p><b>a. Manhattan, Euclidean, Minkowski, Supremum, Cosine Distances</b></p><div><ul><li><b>Manhattan Distance</b></li></ul></div><pre class="codeinput">Data_Q4 = [1.4,1.3,2.9;1.8,1.4,3.2;1.3,1.2,2.9;0.9,3.5,3.1;1.5,2.1,3.3];
+x = [1.25,1.78,3.01];
+<span class="keyword">for</span> i=1:size(Data_Q4,1)
+    Manhattan_Distance(i,1) = (abs(x(1)-Data_Q4(i,1))) + (abs(x(2)-Data_Q4(i,2))) + (abs(x(3)-Data_Q4(i,3)));
+<span class="keyword">end</span>
+</pre><div><ul><li><b>Euclidean Distance</b></li></ul></div><pre class="codeinput"><span class="keyword">for</span> i=1:size(Data_Q4,1)
+    Euclidean_Distance(i,1) = sqrt(((x(1)-Data_Q4(i,1))^2)+((x(2)-Data_Q4(i,2))^2)+((x(3)-Data_Q4(i,3))^2));
+<span class="keyword">end</span>
+</pre><div><ul><li><b>Minkowski Distance</b></li></ul></div><pre class="codeinput"><span class="keyword">for</span> i=1:size(Data_Q4,1)
+    Minkowski_Distance(i,1) = ((abs(x(1)-Data_Q4(i,1))^3)+(abs(x(2)-Data_Q4(i,2))^3)+(abs(x(3)-Data_Q4(i,3))^3))^(1/3);
+<span class="keyword">end</span>
+</pre><div><ul><li><b>Supremum Distance</b></li></ul></div><pre class="codeinput"><span class="keyword">for</span> i=1:size(Data_Q4,1)
+    a(1)=(abs(x(1)-Data_Q4(i,1)));
+    a(2)=(abs(x(2)-Data_Q4(i,2)));
+    a(3)=(abs(x(3)-Data_Q4(i,3)));
+    Supremum_Distance(i,1) = max(a);
+<span class="keyword">end</span>
+</pre><div><ul><li><b>Cosine Similarity</b></li></ul></div><pre class="codeinput">X = Data_Q4;
+Y = x;
+Cosine_Similarity = (X*Y')./(sqrt(sum(X'.^2))'*sqrt(sum(Y'.^2)));
+Table_Q4 = table(Manhattan_Distance,Euclidean_Distance,Minkowski_Distance,Supremum_Distance,Cosine_Similarity,<span class="keyword">...</span>
+   <span class="string">'RowNames'</span>,Sno);
+disp(Table_Q4)
+</pre><pre class="codeoutput">         Manhattan_Distance    Euclidean_Distance    Minkowski_Distance    Supremum_Distance    Cosine_Similarity
+         __________________    __________________    __________________    _________________    _________________
+
+    1    0.74                  0.51478               0.48671               0.48                 0.99198          
+    2    1.12                  0.69498               0.61101               0.55                 0.98505          
+    3    0.74                  0.59245               0.58144               0.58                 0.99006          
+    4    2.16                   1.7576                1.7249               1.72                 0.94369          
+    5    0.86                    0.499               0.41752               0.32                 0.99927          
+
+</pre><p><b>b. min-max Normalization in range 0 - 1 and Euclidean Distance</b></p><div><ul><li><b>min-max Normalization in range 0 - 1</b></li></ul></div><pre class="codeinput">[MinMax_Norm_Data_Q4,MinMax_Norm_x] = minmaxNorm(Data_Q4,x);
+</pre><div><ul><li><b>Euclidean Distance</b></li></ul></div><pre class="codeinput"><span class="keyword">for</span> i=1:size(Data_Q4,1)
+    Euclidean_Distance_Norm_Data_Q4(i,1) = sqrt(((MinMax_Norm_x(1)-MinMax_Norm_Data_Q4(i,1))^2)+((MinMax_Norm_x(2)-MinMax_Norm_Data_Q4(i,2))^2)+((MinMax_Norm_x(3)-MinMax_Norm_Data_Q4(i,3))^2));
+<span class="keyword">end</span>
+
+fprintf(<span class="string">'Eucledian distance beteen x and x1 ... x5 is: \n'</span>)
+disp(Euclidean_Distance_Norm_Data_Q4)
+</pre><pre class="codeoutput">Eucledian distance beteen x and x1 ... x5 is: 
+    0.3833
+    0.7914
+    0.3772
+    0.8724
+    0.7888
+
+</pre><pre class="codeinput"><span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function P2_GroupGamma
+%% CS4821 Project2 GroupGamma 
+% *Prithvi Kambhampati*
+%
+% *Sree Ram Akula*
+%% Question 1: minmaxnorm and zscorenorm
+function [trData_minmaxnorm, teData_minmaxnorm] = minmaxNorm(trData,teData,minV,maxV)
+%%
+if ((nargin==1) & (nargout==1))
+    for i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = (trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i)));
+    end
+end
+if ((nargin==2) & (nargout==2))
+    for i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = (trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i)));
+    end
+    for i = 1:size(teData,2)
+        teData_minmaxnorm(:,i) = (teData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i)));
+    end
+end
+if ((nargin==3) & (nargout==1))
+    for i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = ((trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i))))*(minV-teData)+teData;
+    end
+end
+if ((nargin==4) & (nargout==2))
+    for i = 1:size(trData,2)
+        trData_minmaxnorm(:,i) = ((trData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i))))*(maxV-minV)+minV;
+    end
+    for i = i:size(teData,2)
+        teData_minmaxnorm(:,i) = ((teData(:,i)-min(trData(:,i)))/(max(trData(:,i))-min(trData(:,i))))*(maxV-minV)+minV;
+    end
+end
+end
+
+function [trData_zscorenorm,teData_zscorenorm] = zscoreNorm(trData,teData,madFlag)
+%%
+if ((nargin==2) & (nargout==1))
+    if teData>0
+        for i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/mad(trData(:,i));
+        end
+    else
+        for i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/std(trData(:,i));
+        end
+    end
+end
+if ((nargin==3) & (nargout==2))
+    if madFlag>0
+        for i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/mad(trData(:,i));
+        end
+        for i = 1:size(teData,2)
+            teData_zscorenorm(:,i) = (teData(:,i)-mean(trData(:,i)))/mad(trData(:,i));
+        end
+    else
+        for i = 1:size(trData,2)
+            trData_zscorenorm(:,i) = (trData(:,i)-mean(trData(:,i)))/std(trData(:,i));
+        end
+        for i = 1:size(teData,2)
+            teData_zscorenorm(:,i) = (teData(:,i)-mean(trData(:,i)))/std(trData(:,i));
+        end
+    end
+end
+end
+
+
+%% Question 2 : Normalize Data
+%%
+% *a. min-max Normalization in range 0-1*
+clear;
+Data_Q2 = [200;300;400;600;1000];
+MinMax_Norm_Data_Q2 = minmaxNorm(Data_Q2);
+%%
+% *b. z-score Normalization*
+Zscore_Norm_Data_Q2 = zscoreNorm(Data_Q2,0);
+%%
+% *c. z-score Normalization using mean absolute deviation*
+Mad_Zscore_Norm_Data_Q2 = zscoreNorm(Data_Q2,1);
+Sno={'1','2','3','4','5'};
+Table=table(Data_Q2,MinMax_Norm_Data_Q2,Zscore_Norm_Data_Q2,Mad_Zscore_Norm_Data_Q2,...
+   'RowNames',Sno)
+%% Question 3 : Iris Data
+iris_data = fileread('iris.data');
+iris_data = textscan(iris_data,'%f%f%f%f%s','delimiter',',');
+petal_length = cell2mat(iris_data(1,3));
+%%
+% *a. min-max Normalization in range -1 - 1*
+Data_Q3 = [1.95;3.1;5.68;6.2];
+disp(Data_Q3)
+[MinMax_Norm_petal_length,MinMax_Norm_Data_Q3] = minmaxNorm(petal_length,Data_Q3,-1,1);
+fprintf('mix max normaliaztion of 1.95, 3.1, 5.68, 6.2 is:\n')
+disp(MinMax_Norm_Data_Q3)
+%%
+% *b. z-score Normalization*
+[Zscore_Norm_petal_length,Zscore_Norm_Data_Q3] = zscoreNorm(petal_length,Data_Q3,0);
+fprintf('Z-score Normaliaztion of 1.95, 3.1, 5.68, 6.2 is:\n')
+disp(Zscore_Norm_Data_Q3)
+%%
+% *c. Comment on which method is preferred for this data, and why?*
+figure
+hold on
+plot(MinMax_Norm_Data_Q3)
+plot(Zscore_Norm_Data_Q3)
+legend('minmax','Z score','location','northwest')
+hold off
+%%
+% We think that Z-score normalization is better in this case as the data
+% does not have a huge range to normalize it between a particular range.
+% Z-score preserves the range and introduces the dispersion of the series
+% (standard deviation and mean).
+%% Question 4 : Distance Data
+%%
+% *a. Manhattan, Euclidean, Minkowski, Supremum, Cosine Distances*
+%%
+% * *Manhattan Distance*
+Data_Q4 = [1.4,1.3,2.9;1.8,1.4,3.2;1.3,1.2,2.9;0.9,3.5,3.1;1.5,2.1,3.3];
+x = [1.25,1.78,3.01];
+for i=1:size(Data_Q4,1)
+    Manhattan_Distance(i,1) = (abs(x(1)-Data_Q4(i,1))) + (abs(x(2)-Data_Q4(i,2))) + (abs(x(3)-Data_Q4(i,3)));
+end
+%%
+% * *Euclidean Distance*
+for i=1:size(Data_Q4,1)
+    Euclidean_Distance(i,1) = sqrt(((x(1)-Data_Q4(i,1))^2)+((x(2)-Data_Q4(i,2))^2)+((x(3)-Data_Q4(i,3))^2));
+end
+%%
+% * *Minkowski Distance*
+for i=1:size(Data_Q4,1)
+    Minkowski_Distance(i,1) = ((abs(x(1)-Data_Q4(i,1))^3)+(abs(x(2)-Data_Q4(i,2))^3)+(abs(x(3)-Data_Q4(i,3))^3))^(1/3);
+end
+%%
+% * *Supremum Distance*
+for i=1:size(Data_Q4,1)
+    a(1)=(abs(x(1)-Data_Q4(i,1)));
+    a(2)=(abs(x(2)-Data_Q4(i,2)));
+    a(3)=(abs(x(3)-Data_Q4(i,3)));
+    Supremum_Distance(i,1) = max(a);
+end
+%%
+% * *Cosine Similarity*
+X = Data_Q4;
+Y = x;
+Cosine_Similarity = (X*Y')./(sqrt(sum(X'.^2))'*sqrt(sum(Y'.^2)));
+Table_Q4 = table(Manhattan_Distance,Euclidean_Distance,Minkowski_Distance,Supremum_Distance,Cosine_Similarity,...
+   'RowNames',Sno);
+disp(Table_Q4)
+%% 
+% *b. min-max Normalization in range 0 - 1 and Euclidean Distance*
+%%
+% * *min-max Normalization in range 0 - 1*
+[MinMax_Norm_Data_Q4,MinMax_Norm_x] = minmaxNorm(Data_Q4,x);
+%%
+% * *Euclidean Distance*
+for i=1:size(Data_Q4,1)
+    Euclidean_Distance_Norm_Data_Q4(i,1) = sqrt(((MinMax_Norm_x(1)-MinMax_Norm_Data_Q4(i,1))^2)+((MinMax_Norm_x(2)-MinMax_Norm_Data_Q4(i,2))^2)+((MinMax_Norm_x(3)-MinMax_Norm_Data_Q4(i,3))^2));
+end
+
+fprintf('Eucledian distance beteen x and x1 ... x5 is: \n')
+disp(Euclidean_Distance_Norm_Data_Q4)
+
+end
+##### SOURCE END #####
+--></body></html>

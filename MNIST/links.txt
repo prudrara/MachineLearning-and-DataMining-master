@@ -1,0 +1,9 @@
+http://neuralnetworksanddeeplearning.com/chap1.html
+http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/
+https://machinelearningmastery.com/implement-backpropagation-algorithm-scratch-python/
+https://machinelearningmastery.com/tutorial-first-neural-network-python-keras/
+https://www.kdnuggets.com/2016/10/beginners-guide-neural-networks-python-scikit-learn.html
+https://github.com/BenjiKCF/Neural-Network-with-Financial-Time-Series-Data
+https://github.com/llSourcell/predicting_stock_prices/blob/master/challenge.py
+https://github.com/scorpionhiccup/StockPricePrediction
+
